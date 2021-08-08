@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="script.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.6/jspdf.plugin.autotable.min.js"></script>
+    <script src="https://cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+
+
+    <title>Class Marksheet</title>
+</head>
+
+<body>
+    <!-- Title -->
+    <div id="title" class="container shadow">
+        <i style="color: #ffffff;" class="bi bi-journals"></i>
+        <h2>CLASS MARKSHEET</h2>
+    </div>
+
+    <!-- Function -->
+    <div id="inputform" class="container shadow">
+        <div class="row">
+            <!-- Form nhap diem -->
+            <div class="col-lg-4 border">
+                <h6>ENTER SUB SCORED</h6>
+                <!-- Name -->
+                <div class="input-group mb-2">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Name</span>
+                    </div>
+                    <input id="get-name" type="text" class="form-control" placeholder="Nguyễn Văn A">
+                </div>
+
+                <!-- MATH -->
+                <div class="input-group mb-2">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Math</span>
+                    </div>
+                    <input id="get-mathscore" type="text" class="form-control" placeholder="0-10">
+                </div>
+                <!-- PHYSICS -->
+                <div class="input-group mb-2">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Physics</span>
+                    </div>
+                    <input id="get-physcore" type="text" class="form-control" placeholder="0-10">
+                </div>
+
+                <!-- CHEMISTRY -->
+                <div class="input-group mb-2">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Chemistry</span>
+                    </div>
+                    <input id="get-chescore" type="text" class="form-control" placeholder="0-10">
+                </div>
+
+                <div class="button pb-2 text-center" id="addbutton">
+                    <button id="addBtn" type="button" class="btn btn-outline-secondary btn-sm">+ Add</button>
+                    <button id="clearBtn" type="button" class="btn btn-outline-secondary btn-sm">- Clear</button>
+                </div>
+
+            </div>
+
+            <!-- Cac nut chuc nang -->
+            <div class="col-lg-8 border">
+                <div class="input-group mx-auto" id="search">
+                    <input id="searchval" type="search" class="form-control rounded" placeholder="Nguyễn Văn A" />
+                    <button id="searchbtn" type="button" class="btn btn-outline-secondary">Search</button>
+                </div>
+
+                <div class="functionButton pb-3 text-center">
+                    <button id="averagecall" type="button" class="btn btn-outline-secondary btn-sm">Average cal</button>
+                    <button id="highlightgoodst" type="button" class="btn btn-outline-secondary btn-sm">Highlight good student</button>
+                    <button id="showallst" type="button" class="btn btn-outline-secondary btn-sm">Show all student</button>
+                    <button id="getpdf" type="button" class="btn btn-outline-secondary btn-sm">Export PDF</button>
+                    <button id="getxls" type="button" class="btn btn-outline-secondary btn-sm">Export Excel</button>
+                    <button id="sortbyname" type="button" class="btn btn-outline-secondary btn-sm">Sort by name</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Table -->
+    <div id="table" class="container border shadow">
+        <div class="row">
+            <table id="data-table" class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Math</th>
+                        <th>Physics</th>
+                        <th>Chemistry</th>
+                        <th>Average</th>
+                    </tr>
+                </thead>
+                <tbody id="body">
+                    <tr>
+                        <td>1</td>
+                        <td>BQuyet</td>
+                        <td>8</td>
+                        <td>9</td>
+                        <td>4</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>AQuyet</td>
+                        <td>8</td>
+                        <td>9</td>
+                        <td>4</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>GQuyet</td>
+                        <td>8</td>
+                        <td>9</td>
+                        <td>4</td>
+                        <td></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="notification">All of items must be filled out!</div>
+
+
+</body>
+
+</html>
