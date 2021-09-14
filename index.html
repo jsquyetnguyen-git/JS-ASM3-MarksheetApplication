@@ -11,10 +11,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="script.js"></script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.6/jspdf.plugin.autotable.min.js"></script>
     <script src="https://cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
-
 
     <title>Class Marksheet</title>
 </head>
@@ -31,7 +28,7 @@
         <div class="row">
             <!-- Form nhap diem -->
             <div class="col-lg-4 border">
-                <h6>ENTER SUB SCORED</h6>
+                <h6>ENTER SCORES FOR SUBJECTS</h6>
                 <!-- Name -->
                 <div class="input-group mb-2">
                     <div class="input-group-prepend">
@@ -47,6 +44,7 @@
                     </div>
                     <input id="get-mathscore" type="text" class="form-control" placeholder="0-10">
                 </div>
+
                 <!-- PHYSICS -->
                 <div class="input-group mb-2">
                     <div class="input-group-prepend">
@@ -67,7 +65,6 @@
                     <button id="addBtn" type="button" class="btn btn-outline-secondary btn-sm">+ Add</button>
                     <button id="clearBtn" type="button" class="btn btn-outline-secondary btn-sm">- Clear</button>
                 </div>
-
             </div>
 
             <!-- Cac nut chuc nang -->
@@ -92,7 +89,7 @@
 
     <!-- Table -->
     <div id="table" class="container border shadow">
-        <div class="row">
+        <div class="row table-responsive">
             <table id="data-table" class="table table-striped">
                 <thead>
                     <tr>
@@ -102,42 +99,16 @@
                         <th>Physics</th>
                         <th>Chemistry</th>
                         <th>Average</th>
+                        <th>Delete</th>
                     </tr>
                 </thead>
                 <tbody id="body">
-                    <tr>
-                        <td>1</td>
-                        <td>BQuyet</td>
-                        <td>8</td>
-                        <td>9</td>
-                        <td>4</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>AQuyet</td>
-                        <td>8</td>
-                        <td>9</td>
-                        <td>4</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>GQuyet</td>
-                        <td>8</td>
-                        <td>9</td>
-                        <td>4</td>
-                        <td></td>
-                    </tr>
-
                 </tbody>
             </table>
         </div>
     </div>
 
-    <div class="notification">All of items must be filled out!</div>
-
-
+    <div class="notification"></div>
 </body>
 
 </html>

@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-    var stt = 0;
+    let stt = 0;
 
     function Student(name, mathScore, physicalScore, chemistryScore) {
         this.name = name;
@@ -9,204 +9,172 @@ $(document).ready(function() {
         this.chemistryScore = chemistryScore;
     }
 
-    //Add new student from input form
-    $("#addBtn").click(function() {
-        var name = $("#get-name").val();
-        var math = $("#get-mathscore").val();
-        var physic = $("#get-physcore").val();
-        var chemistry = $("#get-chescore").val();
+    //Get new student from input form
+    $('#addBtn').click(function() {
+        let name = $('#get-name').val();
+        let math = $('#get-mathscore').val();
+        let physic = $('#get-physcore').val();
+        let chemistry = $('#get-chescore').val();
 
-        var newStudent = new Student(name, math, physic, chemistry);
-        if (name == "" || math == "" || physic == "" || chemistry == "") {
-            // alert("Please enter all of items!")
-            notice();
-        } else {
-            stt++;
-            $("#data-table").append(`<tr>
-            <td>${stt}</td>
-            <td>${newStudent.name}</td>
-            <td>${newStudent.mathScore}</td>
-            <td>${newStudent.physicalScore}</td>
-            <td>${newStudent.chemistryScore}</td>
-            <td>?</td>
-            </tr>`);
-            $("input.form-control").val("");
+        if (name == '' || math == '' || physic == '' || chemistry == '') {
+            // alert('Please enter all of items!')
+            notice('All of items must be filled out!');
+            return;
         }
+
+        //get name with condition: name must be string
+        if (!isNaN(name)) {
+            notice('Name can not be numeric. Please re-enter!');
+            return;
+        }
+
+        //get score with condition: must be numeric between 0 and 10
+        if (isNaN(math) || math < 0 || math > 10) {
+            notice('Math score must be numeric from 0-10. Please re-enter!');
+            return;
+        }
+
+        if (isNaN(physic) || physic < 0 || physic > 10) {
+            notice('Physics score must be numeric from 0-10. Please re-enter!');
+            return;
+        }
+
+        if (isNaN(chemistry) || chemistry < 0 || chemistry > 10) {
+            notice('Chemistry score must be numeric from 0-10. Please re-enter!');
+            return;
+        }
+
+        //declare new object and call function to insert into table
+        let newStudent = new Student(name, math, physic, chemistry);
+        insertStudent(newStudent);
     })
 
+    //Insert new student to new row in data table
+    function insertStudent(newStudent) {
+        stt++;
+        $('#data-table').append(`<tr>
+        <td>${stt}</td>
+        <td>${newStudent.name}</td>
+        <td>${newStudent.mathScore}</td>
+        <td>${newStudent.physicalScore}</td>
+        <td>${newStudent.chemistryScore}</td>
+        <td>?</td>
+        <td><i class='bi bi-trash'></i></td>
+        </tr>`);
+        $('input.form-control').val('');
+    }
+
     //Clear input form
-    $("#clearBtn").click(function() {
-        $("input.form-control").val("");
+    $('#clearBtn').click(function() {
+        $('input.form-control').val('');
     })
 
     //calculate average marks
-    $("#averagecall").click(function() {
-        $("tr").each(function() {
-            var math = parseFloat($("td:nth-child(3)", this).text());
-            var phy = parseFloat($("td:nth-child(4)", this).text());
-            var che = parseFloat($("td:nth-child(5)", this).text());
-            var averageMarks = ((math + phy + che) / 3).toFixed(1);
-
-            $("td:nth-child(6)", this).text(averageMarks);
+    $('#averagecall').click(function() {
+        $('tr').each(function() {
+            if ($('td:nth-child(6)', this).text() == '?') {
+                let mathScore = parseFloat($('td:nth-child(3)', this).text());
+                let phyScore = parseFloat($('td:nth-child(4)', this).text());
+                let cheScore = parseFloat($('td:nth-child(5)', this).text());
+                let averageMarks = ((mathScore + phyScore + cheScore) / 3).toFixed(1);
+                //change value of cell to average score
+                $('td:nth-child(6)', this).text(averageMarks);
+            }
         });
     })
 
     //highlight good student
-    $("#highlightgoodst").click(function() {
-        $("tr").each(function() {
-            if (parseFloat($("td:nth-child(6)", this).text()) >= 8) {
-                $(this).css("color", "red");
+    $('#highlightgoodst').click(function() {
+        $('tr').each(function() {
+            if (parseFloat($('td:nth-child(6)', this).text()) >= 8) {
+                $(this).css('color', 'red');
             }
         });
     })
 
     //search student
-    $("#searchbtn").click(function() {
-        var key = $("#searchval").val();
-
-        $("tbody>tr").each(function() {
-            var name = $("td:nth-child(2)", this).text();
-            if (name.indexOf(key) > -1) {
-                $(this).css("display");
+    $('#searchbtn').click(function() {
+        let key = $('#searchval').val();
+        $('tbody>tr').each(function() {
+            let name = $('td:nth-child(2)', this).text();
+            if (name.indexOf(key) != -1) {
+                $(this).css('display');
             } else {
-                $(this).css("display", "none");
+                $(this).css('display', 'none');
             }
         })
     })
 
     //show all student
-    $("#showallst").click(function() {
-        $("tbody>tr").each(function() {
+    $('#showallst').click(function() {
+        $('tbody>tr').each(function() {
             $(this).show();
         })
     })
 
     //get excell
-    $("#getxls").click(function() {
-        $("#data-table").table2excel({
-            filename: "Employees.xls"
+    $('#getxls').click(function() {
+        $('#data-table').table2excel({
+            filename: 'Marksheet.xls'
         });
     })
 
     //getPDF
-    $("#getpdf").click(function() {
+    $('#getpdf').click(function() {
+        let getTable = $('#data-table').html();
+        console.log(getTable);
 
-        var doc = new jsPDF('p', 'pt', 'letter');
-        var pageHeight = 0;
-        pageHeight = doc.internal.pageSize.height;
+        //create css
+        let style = '<style>';
+        style += 'table {width: 100%}';
+        style += 'table, th, td {border: solid 1px;border-collapse: collapse;';
+        style += 'padding: 2px 3px;text-align: center;}';
+        style += 'h3{text-align: center;}';
+        //remove delete col
+        style += 'th:last-child,td:last-child{display: none;}';
+        style += '</style>';
 
-        margins = {
-            top: 150,
-            bottom: 60,
-            left: 40,
-            right: 40,
-            width: 600
-        };
-        var y = 20;
-        doc.setLineWidth(2);
-        doc.text(200, y = y + 30, "CLASS MARKSHEET");
-        doc.autoTable({
-            html: '#data-table',
-            startY: 70,
-            theme: 'grid',
-            columnStyles: {
-                0: {
-                    cellWidth: 35,
-                },
-                1: {
-                    cellWidth: 200,
-                },
-                2: {
-                    cellWidth: 70,
-                },
-                3: {
-                    cellWidth: 70,
-                },
-                4: {
-                    cellWidth: 70,
-                },
-                5: {
-                    cellWidth: 70,
-                }
-            },
-            styles: {
-                minCellHeight: 30
-            }
-        })
-        doc.save('Marks_Of_Students.pdf');
+        //create window object
+        let win = window.open('', '', 'height=1080,width=1080');
+        //create html
+        let html = '<html><head>';
+        html += style;
+        html += '</head>';
+        html += '<body>';
+        html += '<table>'
+        html += '<h3>CLASS MARKSHEET</h3>'
+        html += getTable;
+        html += '</table>';
+        html += '</body></html>';
+
+        $(win.document.body).append(html);
+        win.print(); //print
     })
 
     //sort by name
-    $("#sortbyname").click(function() {
-        var table = $('#body');
+    $('#sortbyname').click(function() {
+        let table = $('#body');
 
         function compare(a, b) {
             return $('td:nth-child(2)', a).text().localeCompare($('td:nth-child(2)', b).text());
         }
-
         table.find('tr').sort(compare).appendTo(table);
     })
 
+    //delete a row
+    $('#data-table').on('click', '.bi', function() {
+        $(this).parent().parent().remove();
+    });
 
     //notice
-    function notice() {
-        $('.notification').slideDown('slow');
-        window.setTimeout(close, 2000);
+    function notice(content) {
+        $('.notification').text(content);
+        $('.notification').slideDown('fast');
+        window.setTimeout(close, 3000);
     }
 
     function close() {
-        $('.notification').slideToggle('slow');
+        $('.notification').slideToggle('fast');
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 });
